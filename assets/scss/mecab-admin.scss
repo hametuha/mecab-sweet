@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+@import "compass";
+
+// Header
+.mecab-jumbotron{
+  position: relative;
+  padding: 2em 2em 2em 200px;
+  min-height: 150px;
+  .eyecatch{
+    @include border-radius(50%);
+    position: absolute;
+    left: 0;
+    top: 15px;
+  }
+  .example{
+    display: none;
+    &.toggle{
+      display: block;
+    }
+    pre{
+      padding: 1em;
+      background-color: #fff;
+      .comment{
+        color: #ccc;
+      }
+      .keyword{
+        color: #d16755;
+      }
+      .string{
+        color: #3888a5;
+      }
+      .variable{
+        color: #dd6b38;
+      }
+      .method{
+        color: #9d9d00;
+      }
+    }
+  }
+}
+
+p.alert{
+  color: red;
+}
+
+.mecab-status{
+  table-layout: auto;
+  border-collapse: collapse;
+  width: 100%;
+  caption{
+    font-size: 1.5em;
+    padding: 1em 0;
+  }
+  th, td{
+    padding: 1em 1.5em;
+    background-color: #f9f9f9;
+    border-left: 1px dotted #ddd;
+  }
+  thead{
+    th{
+      border-top: 3px double #ddd;
+      border-bottom: 3px double #ddd;
+      &:first-child{
+        border-left: none;
+      }
+    }
+  }
+  tbody{
+    th{
+      white-space: nowrap;
+      border-left: none;
+    }
+    th, td{
+      border-bottom: 1px solid #ddd;
+    }
+    tr:nth-child(odd){
+      th, td{
+        background-color: #ffffff;
+      }
+    }
+  }
+  .status{
+    text-align: center;
+  }
+  .on, .off{
+    display: inline-block;
+    padding: 5px 10px;
+    @include border-radius(5px);
+    color: white;
+    font-family: monospace;
+  }
+  .on{
+    background-color: #008000;
+  }
+  .off{
+    background-color: red;
+  }
+}
+
+.result-window{
+  background-color: #000;
+  color: #fff;
+  padding: 1em;
+  font-family: monospace;
+  h4{
+    font-weight: normal;
+  }
+  .indicator{
+    height: 1em;
+    background-color: #444;
+    div{
+      background-color: #406d4a;
+      height: 100%;
+      width: 0;
+    }
+  }
+}
+
+.loading{
+  .result-window{
+    display: block;
+  }
+}
+
+#form-message{
+  height: 12em;
+  line-height: 1.2;
+  overflow: auto;
+  span, strong{
+    display: block;
+  }
+  strong{
+    color: red;
+  }
+}
+
+.loading #form-message{
+  background: url("../img/ajax-loader.gif") center center no-repeat;
+}
+.finished #form-message{
+  background: none;
+}
+
+// Footer
+#mecab-admin-footer{
+  position: relative;
+  background-color: white;
+  margin-top: 2em;
+  padding: 2em;
+  @include clearfix();
+
+
+  .fork-me{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .fb-like-box{
+    float: right;
+    margin-left: 2em;
+  }
+
+  ul{
+    margin-right: 300px;
+    li{
+      margin: 10px 0;
+      a{
+        display: block;
+        padding: 10px;
+        @include border-radius(3px);
+        &:link{
+          text-decoration: none;
+        }
+        &:hover{
+
+          background-color: #f9f9f9;
+        }
+      }
+    }
+  }
+}
+
+
