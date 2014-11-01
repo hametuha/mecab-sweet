@@ -33,6 +33,10 @@
 			<th><label for="user_dic_path"><?php $this->i18n->_e('User Dictionary Path') ?></label></th>
 			<td>
 				<input type="text" class="regular-text" id="user_dic_path" name="user_dic_path" value="<?php echo esc_attr($this->option->user_dic_path) ?>" placeholder="<?php echo esc_attr($this->i18n->__('Specify CSV file path on your server.')) ?>" />
+				<p class="description">
+					<?php $this->i18n->_e('Is this too complicated? You can install empty CSV.') ?>
+					<a class="button" id="mecab-csv-installer" href="<?php echo wp_nonce_url(admin_url('admin-ajax.php?action=mecab_install_csv'), 'mecab_install_csv') ?>"><?php $this->i18n->_e('Install') ?></a>
+				</p>
 			</td>
 		</tr>
 		<tr>

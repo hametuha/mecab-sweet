@@ -36,8 +36,31 @@ class Setting extends AdminScreen
 				wp_safe_redirect($this->url('mecab-setting'));
 				exit;
 			}
+		}else{
+			// Install CSV
+			add_action('wp_ajax_mecab_install_csv', array($this, 'install_csv'));
 		}
 	}
 
-
-} 
+	/**
+	 * Install CSV
+	 *
+	 */
+	public function install_csv(){
+		try{
+			if( !current_user_can('manage_options') || !$this->input->verify_nonce('mecab_install_csv')  ){
+				throw new \Exception('You have no permission.');
+			}
+			$json = array(
+				'success' => true,
+				'message' => $this->dic->install_csv(),
+			);
+		}catch ( \Exception $e ){
+			$json = array(
+				'success' => false,
+				'message' => $e->getMessage(),
+			);
+		}
+		wp_send_json($json);
+	}
+}

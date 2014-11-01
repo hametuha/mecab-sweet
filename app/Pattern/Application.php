@@ -5,6 +5,7 @@ namespace MeCabSweet\Pattern;
 
 use MeCabSweet\Data\Option;
 use MeCabSweet\Data\SearchIndex;
+use MeCabSweet\Utility\Dictionary;
 use MeCabSweet\Utility\i18n;
 use MeCabSweet\Utility\Input;
 use MeCabSweet\Utility\String;
@@ -17,6 +18,7 @@ use MeCabSweet\Utility\String;
  * @property-read Input $input
  * @property-read i18n $i18n
  * @property-read String $str
+ * @property-read Dictionary $dic
  * @property-read SearchIndex $index_table
  * @property-read Option $option
  * @property-read string $version
@@ -44,7 +46,10 @@ abstract class Application extends Singleton
 				break;
 			case 'str':
 				return String::get_instance();
-				breka;
+				break;
+			case 'dic':
+				return Dictionary::get_instance();
+				break;
 			case 'version':
 				return MECAB_SWEET_VERSION;
 				break;

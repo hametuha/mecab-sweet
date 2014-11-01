@@ -40,8 +40,13 @@
   }
 }
 
-p.alert{
-  color: red;
+.wrap{
+  .alert{
+    color: #c23607;
+  }
+  .warning{
+    color: #dd742e;
+  }
 }
 
 .mecab-status{
@@ -135,11 +140,8 @@ p.alert{
   }
 }
 
-.loading #form-message{
+#form-message.loading {
   background: url("../img/ajax-loader.gif") center center no-repeat;
-}
-.finished #form-message{
-  background: none;
 }
 
 // Footer

@@ -39,7 +39,7 @@
 		<?php $this->i18n->_e('Don\'t you know morphem? Click button and see example.'); ?>
 	</p>
 	<p>
-		<a class="button example-toggle" href="#"><i class="dashicons dashicons-portfolio"></i> <?php $this->i18n->_e('See Example') ?></a>
+		<a class="button example-toggle" href="#"><i class="dashicons dashicons-visibility"></i> <?php $this->i18n->_e('See Power of MeCab') ?></a>
 	</p>
 	<div class="example">
 
@@ -49,7 +49,7 @@ echo <<<HTML
 <span class="variable">\$nodes</span> = <span class="variable">\$mecab</span>-><span class="method">parseToNode</span>(<span class="string">'すもももももももものうち'</span>);
 <span class="variable">\$parse_result</span> = <span class="method">array</span>();
 foreach( <span class="variable">\$nodes</span> as <span class="variable">\$node</span> ){
-	if( 0 == \<span class="variable">\$node</span>-><span class="method">getStat</span>() ){
+	if( 0 == <span class="variable">\$node</span>-><span class="method">getStat</span>() ){
 		<span class="variable">\$parse_result</span>[] = <span class="method">sprintf</span>(<span class="string">'%s（%s）'</span>, <span class="variable">\$node</span>-><span class="method">getSurface</span>(), <span class="variable">\$node</span>-><span class="method">getFeature</span>());
 	}
 }
@@ -70,3 +70,5 @@ HTML;
 </pre>
 	</div>
 </div>
+
+<hr />

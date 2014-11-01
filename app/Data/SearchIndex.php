@@ -147,4 +147,29 @@ SQL;
 		return $where;
 	}
 
+	/**
+	 * Rebuild index on update
+	 *
+	 * @param int $post_id
+	 * @param \WP_Post $post
+	 */
+	public function save_post($post_id, $post){
+		if( wp_is_post_autosave($post) || wp_is_post_revision($post) ){
+			return;
+		}
+		if( !$this->is_post_type_to_index($post->post_type) ){
+			return;
+		}
+		$this->add_index($post);
+	}
+
+	/**
+	 * Delete index record on post deletion
+	 *
+	 * @param int $post_id
+	 */
+	public function delete_post($post_id){
+		$this->db->delete($this->table, array('post_id' => $post_id), array('%d'));
+	}
+
 }

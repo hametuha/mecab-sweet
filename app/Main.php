@@ -6,6 +6,7 @@ namespace MeCabSweet;
 use MeCabSweet\Pattern\Application;
 use MeCabSweet\Screen\FullTextSearch;
 use MeCabSweet\Screen\Setting;
+use MeCabSweet\Screen\UserDictionary;
 
 /**
  * Main Routine
@@ -35,6 +36,12 @@ class Main extends Application
 			'slug' => 'mecab-fulltext-search',
 			'title' => $this->i18n->__('Full Text Search'),
 			'menu_title' => $this->i18n->__('Full Text Search'),
+			'parent_slug' => 'mecab-setting',
+		));
+		UserDictionary::register(array(
+			'slug' => 'mecab-user-dic',
+			'title' => $this->i18n->__('User Dictionary'),
+			'menu_title' => $this->i18n->__('User Dictionary'),
 			'parent_slug' => 'mecab-setting',
 		));
 
@@ -84,8 +91,12 @@ HTML;
 	public function init(){
 		// Add filter if fulltext search is on
 		if( $this->option->fulltext_search ){
+			// Query filter
 			add_filter('posts_join', array($this->index_table, 'posts_join'), 10, 2);
 			add_filter('posts_search', array($this->index_table, 'posts_search'), 10, 2);
+			// On update post
+			add_action('save_post', array($this->index_table, 'save_post'), 10, 2);
+			add_action('delete_post', array($this->index_table, 'delete_post'));
 		}
 	}
 
