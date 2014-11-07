@@ -35,7 +35,7 @@
 	</ul>
 
 	<p class="description">
-		<?php $this->i18n->_e('MeCab means also a kind of edible seaweed which is a favorite food of Taku Kudou, MeCab\'s author.') ?>
+		<?php $this->i18n->_e('MeCab means also a kind of edible seaweed which is a favorite food of Taku Kudô, who is MeCab\'s author.') ?>
 	</p>
 
 

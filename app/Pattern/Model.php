@@ -30,6 +30,10 @@ abstract class Model extends Application
 	 */
 	protected $key = 'mecab_index_table_version';
 
+	/**
+	 * @var bool
+	 */
+	protected $only_on_main_blog = false;
 
 	/**
 	 * Update table
@@ -37,7 +41,7 @@ abstract class Model extends Application
 	 * @return bool
 	 */
 	public function update_table(){
-		if( $this->is_outdated() && ($sql = $this->create_sql()) ){
+		if( $this->current_user_can_update_table() && $this->is_outdated() && ($sql = $this->create_sql()) ){
 			require_once ABSPATH.'wp-admin/includes/upgrade.php';
 			dbDelta($sql);
 			update_option($this->key, $this->version);
@@ -60,6 +64,19 @@ abstract class Model extends Application
 	 */
 	public function is_outdated(){
 		return version_compare($this->version, $this->current_version, '>');
+	}
+
+	/**
+	 * Detect database install capability
+	 *
+	 * @return bool
+	 */
+	public function current_user_can_update_table(){
+		if( is_multisite() ){
+			return current_user_can('manage_network_options');
+		}else{
+			return current_user_can('manage_options');
+		}
 	}
 
 	/**
@@ -98,7 +115,7 @@ abstract class Model extends Application
 				return $wpdb;
 				break;
 			case 'table':
-				return $this->db->prefix.$this->table_name;
+				return ($this->only_on_main_blog ? $this->db->base_prefix : $this->db->prefix).$this->table_name;
 				break;
 			default:
 				return parent::__get($key);

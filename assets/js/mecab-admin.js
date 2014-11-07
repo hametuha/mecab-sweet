@@ -126,6 +126,75 @@
             });
         });
 
+        // Token search
+        var addTermSearchMessage = function(msg, error){
+            var p = $('<p></p>');
+            if( error ){
+                p.addClass('error');
+            }
+            p.text(msg);
+            $('#token-result').append(p);
+            setTimeout(function(){
+                p.remove();
+            }, 3000);
+        };
+        $(document).on('click', '#cost-exec', function(e){
+            e.preventDefault();
+            var term = $('#cost-calc').val(),
+                container = $('#token-result');
+            if( term.length ){
+                container.empty();
+                $.get($(this).attr('href'), {
+                    s: term
+                }).done(function(result){
+                    if( result.tokens.length ){
+                        $.each(result.tokens, function(index, token){
+                            container.append($('<a href="#" data-cost="' + token.cost + '"></a>')
+                                .text(token.surface + ' (' + token.cost + ')'));
+                        });
+                    }else{
+                        addTermSearchMessage(result.message, true);
+                    }
+                }).fail(function(xhr, status, error){
+                    addTermSearchMessage(error, true);
+                });
+            }
+        });
+
+        $('#token-result').on('click', 'a', function(e){
+            e.preventDefault();
+            $('#cost').val($(this).attr('data-cost'));
+        });
+
+
+
+        var showMorphemeEditorMessage = function(msg, error){
+            var div = $('<div><p></p></div>');
+            div.addClass(error ? 'error' : 'updated');
+            div.find('p').text(msg);
+            $('#morphem-editor').before(div);
+            setTimeout(function(){
+                div.remove();
+            }, 5000);
+        };
+
+        $('#morphem-editor').submit(function(e){
+            alert('sou新する');
+            e.preventDefault();
+            var form = $(this);
+            form.ajaxSubmit({
+                success: function(result){
+                    showMorphemeEditorMessage(result.message, !result.success);
+                    if( result.reset ){
+                        form.get(0).reset();
+                    }
+                },
+                error: function(xhr, status, error){
+                    showMorphemeEditorMessage(error, true);
+                }
+            });
+        });
+
     });
 
 

@@ -5,9 +5,19 @@ namespace MeCabSweet\Utility;
 
 use MeCabSweet\Pattern\Singleton;
 
+/**
+ * String helper
+ *
+ * @package MeCabSweet\Utility
+ * @property-read \MeCab_Tagger $tagger
+ */
 class String extends Singleton
 {
 
+	/**
+	 * @var \MeCab_Tagger
+	 */
+	private $mecab_tagger = null;
 
 	/**
 	 * Convert string to mecab-ready
@@ -43,11 +53,47 @@ class String extends Singleton
 	 */
 	public function split($string){
 		$string = $this->normalize($string);
-		if( function_exists('mecab_split') ){
+		if( $this->ready() ){
 			return mecab_split($string);
 		}else{
 			return preg_split('/[\s。、！？\.,]/u', $string);
 		}
 	}
 
+	public function get_node($string){
+		if( !$this->ready()  ){
+			return array();
+		}
+
+	}
+
+	/**
+	 * Detect if MeCab function exists
+	 *
+	 * @return bool
+	 */
+	private function ready(){
+		return function_exists('mecab_split');
+	}
+
+	/**
+	 * Getter
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed
+	 */
+	public function __get($name){
+		switch( $name ){
+			case 'tagger':
+				if( is_null($this->mecab_tagger) && $this->ready() ){
+					$this->mecab_tagger = new \MeCab_Tagger();
+				}
+				return $this->mecab_tagger;
+				break;
+			default:
+				return null;
+				break;
+		}
+	}
 } 

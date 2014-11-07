@@ -1,10 +1,13 @@
 <?php
 	/** @var \MecabSweet\Screen\FullTextSearch $this */
 ?>
-<h3><?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
+<h3><i class="dashicons dashicons-welcome-learn-more"></i> <?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
 
 <p>
-	<?php $this->i18n->_e('MeCab is dictionary based ') ?>
+	<?php $this->i18n->_e('MeCab is dictionary based morphological analyzer. It means that MeCab uses the internal dictionary to separate strings to Japanese words. Several dictionaries exist and they have numerous words. But it\'s also true that unknown words aren\'t recognized.') ?><br />
+	<?php $this->i18n->_e('For example, let\'s assume that your WordPress site is about your company whose main products are cosmetics. One of your product is a shampoo named <strong>美女髪</strong>.') ?><br />
+	<?php $this->i18n->_e('Ofcourse, we know <strong>美女</strong> and <strong>髪</strong> as common Japanese words. But, on your site, <strong>美女髪</strong> should be recognized as one word which indicates the name of your product, despite that MeCab will split two words <strong>美女</strong> and <strong>髪</strong> because of it\'s dictionary.')  ?><br />
+	<?php $this->i18n->_e('To avoid such naughty result, you can register your own user dictionary. According to the MeCab\'s manual, user dictionary can be registered as CSV. This plugin enables you to register your own csv and compile it to MeCab ready binary. Besides that, it will give you very nice sreen to make your own CSV!') ?>
 </p>
 
 <hr />

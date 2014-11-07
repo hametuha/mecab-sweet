@@ -1,4 +1,6 @@
-
+<?php
+	/** @var \MeCabSweet\Pattern\AdminScreen $this */
+?>
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -20,6 +22,10 @@
 		'mecab-fulltext-search' => $this->i18n->__('Full Text Search'),
 		'mecab-user-dic' => $this->i18n->__('User Dictionary'),
 	);
+	if( $this->option->taxonomy ){
+		$pages['mecab-dic-registered'] = $this->i18n->__('Registered Words');
+		$pages['mecab-dic-add'] = $this->i18n->__('Add Word');
+	}
 	foreach( $pages as $key => $val ):
 		?>
 		<a class="nav-tab<?php if( $this->is_page($key) ) echo ' nav-tab-active'; ?>" href="<?php echo $this->url($key);?>">
@@ -30,6 +36,7 @@
 
 <br class="clear" />
 
+<?php if( $this->is_page('mecab-setting') ): ?>
 <div class="mecab-jumbotron">
 	<img class="eyecatch" src="<?php echo $this->base_url ?>assets/img/mecab-cropped.jpg" width="150" height="150" alt="Mecab" />
 	<p>
@@ -72,3 +79,4 @@ HTML;
 </div>
 
 <hr />
+<?php endif; ?>

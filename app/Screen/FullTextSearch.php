@@ -21,7 +21,7 @@ class FullTextSearch extends AdminScreen
 	public function admin_init() {
 		if( !$this->is_ajax() ){
 			// Update table
-			if( current_user_can('manage_options') && $this->index_table->update_table() ){
+			if( $this->models->search_index->update_table() ){
 				$this->set_message($this->i18n->__('Full Text Search Table has been updated.'));
 			}
 		}else{
@@ -49,7 +49,7 @@ class FullTextSearch extends AdminScreen
 			$per_page = 100;
 			// Get recently updated post
 			$query = new \WP_Query(array(
-				'post_type' => $this->index_table->get_post_types(),
+				'post_type' => $this->models->search_index->get_post_types(),
 				'post_status' => 'any',
 				'posts_per_page' => $per_page,
 				'offset' => $per_page * $offset,
@@ -60,7 +60,7 @@ class FullTextSearch extends AdminScreen
 			if( $query->have_posts() ){
 				while( $query->have_posts() ){
 					$query->the_post();
-					$this->index_table->add_index(get_post());
+					$this->models->search_index->add_index(get_post());
 				}
 				$json['offset'] = $offset + 1;
 				$json['message'] = $this->i18n->_sp('%1$d of %2$d posts have been processed.', $total, $query->found_posts);
@@ -86,7 +86,7 @@ class FullTextSearch extends AdminScreen
 		if( current_user_can('manage_options') ){
 			$term = $this->input->get('s');
 			$args = array(
-				'post_type' => $this->index_table->get_post_types(),
+				'post_type' => $this->models->search_index->get_post_types(),
 				'post_status' => 'any',
 				'posts_per_page' => 100,
 				'order' => 'ASC',

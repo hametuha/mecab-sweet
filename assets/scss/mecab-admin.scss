@@ -2,6 +2,20 @@
 
 @import "compass";
 
+// Common
+.mecab-sweet-admin-wrap{
+  h2{
+    .dashicons{
+      width: 29px;
+      height: 29px;
+      font-size: 29px;
+    }
+  }
+  input[type=number]{
+    width: 8em;
+  }
+}
+
 // Header
 .mecab-jumbotron{
   position: relative;
@@ -143,6 +157,37 @@
 #form-message.loading {
   background: url("../img/ajax-loader.gif") center center no-repeat;
 }
+
+
+
+// Token search
+#token-result{
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  background-color: #f9f9f9;
+  a{
+    @include border-radius(3px);
+    padding: 2px 3px;
+    font-size: 0.85em;
+    display: inline-block;
+    margin-right: 1em;
+    &:link, &:visited{
+      background: #2ea2cc;
+      border-color: #0074a2;
+      color: #fff;
+      text-decoration: none;
+    }
+    &:hover, &:active{
+      text-decoration: none;
+      color: #fff;
+      background-color: darken(#2EA2CC, 10);
+    }
+  }
+  p.error{
+
+  }
+}
+
 
 // Footer
 #mecab-admin-footer{

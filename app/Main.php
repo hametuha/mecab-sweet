@@ -3,9 +3,12 @@
 namespace MeCabSweet;
 
 
+use MeCabSweet\Controllers\DictionaryController;
 use MeCabSweet\Pattern\Application;
 use MeCabSweet\Screen\FullTextSearch;
 use MeCabSweet\Screen\Setting;
+use MeCabSweet\Screen\Taxonomy;
+use MeCabSweet\Screen\TaxonomyAdd;
 use MeCabSweet\Screen\UserDictionary;
 
 /**
@@ -44,6 +47,26 @@ class Main extends Application
 			'menu_title' => $this->i18n->__('User Dictionary'),
 			'parent_slug' => 'mecab-setting',
 		));
+		if( $this->option->taxonomy && $this->library_exists ){
+			// Register admin screen
+			Taxonomy::register(array(
+				'slug' => 'mecab-dic-registered',
+				'title' => $this->i18n->__('Registered Words'),
+				'menu_title' => $this->i18n->__('Registered Words'),
+				'parent_slug' => 'mecab-setting',
+			));
+			TaxonomyAdd::register(array(
+				'slug' => 'mecab-dic-add',
+				'title' => $this->i18n->__('Add Word'),
+				'menu_title' => $this->i18n->__('Add Words'),
+				'parent_slug' => 'mecab-setting',
+			));
+
+			// Add rest API
+			DictionaryController::get_instance();
+		}
+
+
 
 		// If extension doesn't exist, show message.
 		if( !$this->library_exists ){
@@ -63,6 +86,9 @@ class Main extends Application
 .toplevel_page_mecab-setting .wp-menu-image img{
 	width: 20px;
 	height: 20px;
+}
+.mecab-sweet-admin-wrap .nav-tab-wrapper > span{
+	margin-right: 10px;
 }
 </style>
 HTML;
@@ -92,11 +118,11 @@ HTML;
 		// Add filter if fulltext search is on
 		if( $this->option->fulltext_search ){
 			// Query filter
-			add_filter('posts_join', array($this->index_table, 'posts_join'), 10, 2);
-			add_filter('posts_search', array($this->index_table, 'posts_search'), 10, 2);
+			add_filter('posts_join', array($this->models->search_index, 'posts_join'), 10, 2);
+			add_filter('posts_search', array($this->models->search_index, 'posts_search'), 10, 2);
 			// On update post
-			add_action('save_post', array($this->index_table, 'save_post'), 10, 2);
-			add_action('delete_post', array($this->index_table, 'delete_post'));
+			add_action('save_post', array($this->models->search_index, 'save_post'), 10, 2);
+			add_action('delete_post', array($this->models->search_index, 'delete_post'));
 		}
 	}
 

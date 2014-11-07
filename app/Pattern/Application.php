@@ -17,9 +17,9 @@ use MeCabSweet\Utility\String;
  *
  * @property-read Input $input
  * @property-read i18n $i18n
- * @property-read String $str
+ * @property-read \MeCabSweet\Utility\String $str
  * @property-read Dictionary $dic
- * @property-read SearchIndex $index_table
+ * @property-read ModelAccessor $models
  * @property-read Option $option
  * @property-read string $version
  * @property-read string $base_dir
@@ -65,8 +65,8 @@ abstract class Application extends Singleton
 			case 'library_exists':
 				return class_exists('Mecab');
 				break;
-			case 'index_table':
-				return SearchIndex::get_instance();
+			case 'models':
+				return ModelAccessor::get_instance();
 				break;
 			default:
 				return null;

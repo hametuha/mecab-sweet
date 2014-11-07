@@ -63,7 +63,9 @@ abstract class AdminScreen extends Application
 		));
 		if( empty($this->template_name) ){
 			$class_name = explode('\\', get_called_class());
-			$this->template_name = strtolower($class_name[count($class_name) - 1]);
+			$this->template_name = strtolower(preg_replace_callback('/(.)([A-Z])/u', function($matches){
+				return $matches[1].'-'.strtolower($matches[2]);
+			}, $class_name[count($class_name) - 1]));
 		}
 		add_action('admin_menu', array($this, 'admin_menu'));
 		add_action('admin_init', array($this, 'admin_init'));
@@ -106,14 +108,28 @@ abstract class AdminScreen extends Application
 	public function render(){
 		echo '<div class="wrap mecab-sweet-admin-wrap">';
 		include $this->base_dir.'/templates/header.php';
-		$template_path = $this->base_dir.'/templates/'.$this->template_name.'.php';
-		if( file_exists($template_path) ){
-			include $template_path;
+		$template = $this->get_template();
+		if( is_wp_error($template) ){
+			printf('<div class="error"><p>%s</p></div>', $template->get_error_message());
 		}else{
-			printf('<div class="error"><p>%s</p></div>', $this->i18n->_sp('File <code>%s</code> doesn\'t exist.', $template_path));
+			include $template;
 		}
 		include $this->base_dir.'/templates/footer.php';
 		echo '</div>';
+	}
+
+	/**
+	 * Get template
+	 *
+	 * @return string|\WP_Error If failed to get Template, return WP_Error
+	 */
+	protected function get_template(){
+		$template_path = $this->base_dir.'/templates/'.$this->template_name.'.php';
+		if( file_exists($template_path) ){
+			return $template_path;
+		}else{
+			return new \WP_Error(404, $this->i18n->_sp('File <code>%s</code> doesn\'t exist.', $template_path));
+		}
 	}
 
 	/**

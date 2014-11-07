@@ -1,7 +1,7 @@
 <?php
 	/** @var \MecabSweet\Screen\FullTextSearch $this */
 ?>
-<h3><?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
+<h3><i class="dashicons dashicons-welcome-learn-more"></i> <?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
 
 <p>
 	<?php $this->i18n->_e('First of all, WordPress can search posts. Yes, that\'s right. On it\'s searching process, WordPress use <code>LIKE</code> clause. But <code>LIKE</code> doesn\'t use index which is the key feature of MySQL to shorten query time.') ?><br />
@@ -40,7 +40,7 @@
 	<tr>
 		<th scope="row"><?php $this->i18n->_e('Database') ?></th>
 		<td class="status">
-			<?php if( $this->index_table->table_exists() ): ?>
+			<?php if( $this->models->search_index->table_exists() ): ?>
 				<span class="on">OK</span>
 			<?php else: ?>
 				<span class="off">NO</span>
@@ -55,10 +55,10 @@
 	<tr>
 		<th scope="row"><?php $this->i18n->_e('Index status') ?></th>
 		<td class="status">
-			<?php if( !$this->index_table->table_exists() ): ?>
+			<?php if( !$this->models->search_index->table_exists() ): ?>
 				NAN
 			<?php else: ?>
-				<?php $status = $this->index_table->index_status(); ?>
+				<?php $status = $this->models->search_index->index_status(); ?>
 				<span class="<?php echo $status->indexed < $status->total ? 'off' : 'on' ?>">
 					<?php echo number_format_i18n($status->indexed) ?>
 					/
@@ -80,13 +80,13 @@
 <?php if( $this->option->fulltext_search ): ?>
 
 
-	<?php if( !$this->index_table->table_exists() ): ?>
+	<?php if( !$this->models->search_index->table_exists() ): ?>
 		<p class="alert">
 			<?php $this->i18n->_e('Table doesn\'t exist. You can\'t build index. Something might be wrong...') ?>
 		</p>
 	<?php else: ?>
 
-		<h3><?php $this->i18n->_e('Build Index') ?></h3>
+		<h3><span class="dashicons dashicons-update"></span> <?php $this->i18n->_e('Build Index') ?></h3>
 
 		<p><?php $this->i18n->_e('Rebuild index of every test. This will take some minutes. If you are new to this plugin or recompile user dictionary, it is required.') ?></p>
 
@@ -99,9 +99,9 @@
 
 		<hr />
 
-		<h3><?php $this->i18n->_e('Peformance Check') ?></h3>
+		<h3><span class="dashicons dashicons-performance"></span> <?php $this->i18n->_e('Performance Check') ?></h3>
 
-		<p><?php $this->i18n->_e('Enter search term and compare the performance of <code>LIKE</code> VS <code>FullText</code>.') ?></p>
+		<p><?php $this->i18n->_e('Enter search term and compare the performance of <code>LIKE</code> VS <code>FullText</code>. If <code>LIKE</code> is faster, abondon this plugin!') ?></p>
 
 		<form id="mecab-performance" action="<?php echo admin_url('admin-ajax.php') ?>" method="get">
 			<input type="hidden" name="action" value="mecab_performance_check">
