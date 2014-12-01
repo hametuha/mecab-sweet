@@ -1,5 +1,5 @@
 <?php
-	/** @var \MecabSweet\Screen\FullTextSearch $this */
+	/** @var \MecabSweet\UI\Screen\FullTextSearch $this */
 ?>
 <h3><i class="dashicons dashicons-welcome-learn-more"></i> <?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
 

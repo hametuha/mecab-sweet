@@ -5,11 +5,11 @@ namespace MeCabSweet;
 
 use MeCabSweet\Controllers\DictionaryController;
 use MeCabSweet\Pattern\Application;
-use MeCabSweet\Screen\FullTextSearch;
-use MeCabSweet\Screen\Setting;
-use MeCabSweet\Screen\Taxonomy;
-use MeCabSweet\Screen\TaxonomyAdd;
-use MeCabSweet\Screen\UserDictionary;
+use MeCabSweet\UI\Screen\FullTextSearch;
+use MeCabSweet\UI\Screen\Setting;
+use MeCabSweet\UI\Screen\Taxonomy;
+use MeCabSweet\UI\Screen\TaxonomyAdd;
+use MeCabSweet\UI\Screen\UserDictionary;
 
 /**
  * Main Routine
@@ -47,6 +47,10 @@ class Main extends Application
 			'menu_title' => $this->i18n->__('User Dictionary'),
 			'parent_slug' => 'mecab-setting',
 		));
+		if( $this->option->user_dic ){
+			// Enable User dictionary
+			$this->dic->register_user_dic();
+		}
 		if( $this->option->taxonomy && $this->library_exists ){
 			// Register admin screen
 			Taxonomy::register(array(
@@ -106,7 +110,7 @@ HTML;
 	public function admin_enqueue_scripts($page){
 		if( false !== strpos($page, 'mecab') ){
 			wp_enqueue_style('mecab-sweet-admin', $this->base_url.'assets/css/mecab-admin.css', array(), $this->version);
-			wp_enqueue_script('mecab-sweet-admin', $this->base_url.'assets/js/mecab-admin.min.js', array('jquery-form'), $this->version, true);
+			wp_enqueue_script('mecab-sweet-admin', $this->base_url.'assets/js/mecab-admin.min.js', array('jquery-form', 'jquery-effects-highlight'), $this->version, true);
 		}
 	}
 
@@ -120,6 +124,7 @@ HTML;
 			// Query filter
 			add_filter('posts_join', array($this->models->search_index, 'posts_join'), 10, 2);
 			add_filter('posts_search', array($this->models->search_index, 'posts_search'), 10, 2);
+			add_filter('posts_orderby', array($this->models->search_index, 'posts_orderby'), 10, 2);
 			// On update post
 			add_action('save_post', array($this->models->search_index, 'save_post'), 10, 2);
 			add_action('delete_post', array($this->models->search_index, 'delete_post'));

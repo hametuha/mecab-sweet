@@ -14,6 +14,9 @@
   input[type=number]{
     width: 8em;
   }
+  input.long-text{
+    width: 90%;
+  }
 }
 
 // Header
@@ -158,7 +161,15 @@
   background: url("../img/ajax-loader.gif") center center no-repeat;
 }
 
-
+.dictionary-compiler{
+  cursor: pointer;
+  & + img{
+    display: none;
+  }
+  &.disabled + img{
+    display: inline-block;
+  }
+}
 
 // Token search
 #token-result{

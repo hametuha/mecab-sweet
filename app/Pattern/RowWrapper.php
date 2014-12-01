@@ -35,14 +35,14 @@ class RowWrapper
 	 */
 	final public static function convert( $row ){
 		$class_name = get_called_class();
-		if( is_array($row) ){
+		if( is_a($row, 'stdClass') ){
+			return new $class_name($row);
+		}elseif( is_array($row) ){
 			$new_result = array();
 			foreach($row as $r){
 				$new_result[] = new $class_name($r);
 			}
 			return $new_result;
-		}elseif( is_a($row, 'stdClass') ){
-			return new $class_name($row);
 		}elseif( is_null($row) ){
 			return null;
 		}else{

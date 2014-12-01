@@ -1,6 +1,6 @@
 <?php
 
-namespace MeCabSweet\Screen;
+namespace MeCabSweet\UI\Screen;
 
 
 use MeCabSweet\Expression\Morpheme;
@@ -33,8 +33,15 @@ class TaxonomyAdd extends AdminScreen
 	 */
 	protected function assign_morpheme(){
 		$term_id = $this->input->request('term_id');
-		if( $term_id && ($morpheme = $this->models->terms->get_term($term_id)) ){
-			$this->editing_term = $morpheme;
+		if( $term_id ){
+			if( $morpheme = $this->models->terms->get_term($term_id) ){
+				$this->editing_term = $morpheme;
+			}else{
+				wp_die($this->i18n->__('Such word doesn\'t exist'), get_status_header_desc(404), array(
+					'response' =>404,
+					'back_link' => true,
+				));
+			}
 		}
 	}
 
@@ -64,7 +71,7 @@ class TaxonomyAdd extends AdminScreen
 	 * @return mixed|string
 	 */
 	public function get_morpheme_attr($key){
-		if( $this->is_editing() && isset($this->editing_term->{$key}) ){
+		if( $this->is_editing() && !is_null($this->editing_term->{$key}) ){
 			return $this->editing_term->{$key};
 		}else{
 			return '';

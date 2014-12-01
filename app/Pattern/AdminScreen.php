@@ -108,14 +108,21 @@ abstract class AdminScreen extends Application
 	public function render(){
 		echo '<div class="wrap mecab-sweet-admin-wrap">';
 		include $this->base_dir.'/templates/header.php';
+		$this->render_main_content();
+		include $this->base_dir.'/templates/footer.php';
+		echo '</div>';
+	}
+
+	/**
+	 * Get main content
+	 */
+	protected function render_main_content(){
 		$template = $this->get_template();
 		if( is_wp_error($template) ){
 			printf('<div class="error"><p>%s</p></div>', $template->get_error_message());
 		}else{
 			include $template;
 		}
-		include $this->base_dir.'/templates/footer.php';
-		echo '</div>';
 	}
 
 	/**
@@ -129,6 +136,18 @@ abstract class AdminScreen extends Application
 			return $template_path;
 		}else{
 			return new \WP_Error(404, $this->i18n->_sp('File <code>%s</code> doesn\'t exist.', $template_path));
+		}
+	}
+
+	/**
+	 * Include template
+	 *
+	 * @param string $template
+	 */
+	protected function load_template($template){
+		$template_path = $this->base_dir.'/templates/'.$template.'.php';
+		if( file_exists($template_path) ){
+			include $template_path;
 		}
 	}
 

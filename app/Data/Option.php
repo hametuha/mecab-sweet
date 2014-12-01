@@ -14,6 +14,7 @@ use MeCabSweet\Utility\Input;
  * @property-read bool $fulltext_search
  * @property-read bool $user_dic
  * @property-read string $user_dic_path
+ * @property-read string $dict_index_path
  * @property-read bool $taxonomy
  */
 class Option extends Singleton
@@ -34,6 +35,7 @@ class Option extends Singleton
 		'user_dic' => false,
 		'user_dic_path' => '',
 		'taxonomy' => false,
+		'dict_index_path' => '',
 	);
 
 	/**
@@ -46,6 +48,7 @@ class Option extends Singleton
 		foreach( $option as $key => $value ){
 			switch($key){
 				case 'user_dic_path':
+				case 'dict_index_path':
 					$option[$key] = (string)$this->input->post($key);
 					break;
 				default:

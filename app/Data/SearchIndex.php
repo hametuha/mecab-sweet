@@ -138,13 +138,23 @@ SQL;
 	 * @return false|null|string
 	 */
 	public function posts_search($where, \WP_Query $wp_query){
-		if( $wp_query->get('s') && !$wp_query->get('suppress_filters') ){
+		if( $wp_query->get('s') ){
 			$match = <<<SQL
 				AND MATCH({$this->table}.content) AGAINST( %s WITH QUERY EXPANSION )
 SQL;
-			$where = $this->db->prepare($match, implode($wp_query->get('search_terms')));
+			$where = $this->db->prepare($match, implode(' ', $wp_query->get('search_terms')));
 		}
 		return $where;
+	}
+
+	public function posts_orderby($orderby, \WP_Query $wp_query){
+		if( $wp_query->is_search() && (!$wp_query->get('orderby') || 'match' == $wp_query->get('orderby')) ) {
+			$match = <<<SQL
+				MATCH({$this->table}.content) AGAINST( %s WITH QUERY EXPANSION ) DESC
+SQL;
+			$orderby = $this->db->prepare($match, implode(' ', $wp_query->get('search_terms')));
+		}
+		return $orderby;
 	}
 
 	/**

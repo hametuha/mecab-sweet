@@ -110,7 +110,9 @@
             });
         }
 
+        //
         // Performance
+        //
         $('#mecab-performance').submit(function(e){
             e.preventDefault();
             MF.start = new Date();
@@ -126,7 +128,10 @@
             });
         });
 
+
+        //
         // Token search
+        //
         var addTermSearchMessage = function(msg, error){
             var p = $('<p></p>');
             if( error ){
@@ -167,19 +172,21 @@
         });
 
 
-
+        //
+        // Edit screen
+        //
         var showMorphemeEditorMessage = function(msg, error){
-            var div = $('<div><p></p></div>');
+            var editor = $('#morphem-editor'),
+                div = $('<div><p></p></div>');
+            editor.prev('div.error, div.updated').remove();
+            if( !$.isArray(msg) ){
+                msg = [msg];
+            }
             div.addClass(error ? 'error' : 'updated');
-            div.find('p').text(msg);
-            $('#morphem-editor').before(div);
-            setTimeout(function(){
-                div.remove();
-            }, 5000);
+            div.find('p').html(msg.join('<br />'));
+            editor.before(div);
         };
-
         $('#morphem-editor').submit(function(e){
-            alert('sou新する');
             e.preventDefault();
             var form = $(this);
             form.ajaxSubmit({
@@ -195,6 +202,67 @@
             });
         });
 
+
+        //
+        // Compiler
+        //
+        $('.dictionary-compiler').click(function(e){
+            e.preventDefault();
+            var $btn = $(this), label,
+                showMsg = function(m, error){
+                    var $span = $('<span></span>');
+                    $span.addClass( error ? 'alert' : 'warning').text(m);
+                    $btn.next('img').after($span);
+                    $span.effect('highlight', 300, function(){
+                        setTimeout(function(){
+                            $span.fadeOut(500, function(){
+                                $(this).remove();
+                            });
+                        }, 5000);
+                    });
+                };
+            if( !$btn.attr('disabled') ){
+                // Change display
+                $btn.attr('disabled', true).addClass('disabled');
+                label = $btn.text();
+                $btn.text($btn.attr('data-loading'));
+                $btn.attr('data-loading', label);
+                // Ajax
+                $.post($btn.attr('data-endpoint'), {
+                    _wpnonce: $btn.attr('data-nonce')
+                }).done(function(result){
+                    showMsg(result.message, !result.success);
+                }).fail(function(xhr, status, msg){
+                    showMsg(msg, true);
+                }).always(function(){
+                    $btn.attr('disabled', false).removeClass('disabled');
+                    label = $btn.text();
+                    $btn.text($btn.attr('data-loading'));
+                    $btn.attr('data-loading', label);
+                });
+            }
+        });
+
+
+        // Check
+        $('#check-user-dic').submit(function(e){
+            e.preventDefault();
+            var pre = $(this).find('pre');
+            pre.empty();
+            $(this).ajaxSubmit({
+                success: function(result){
+                    $.each(result.tokens, function(index, elt){
+                        var span = $('<span></span>'),
+                            strong = $('<strong></strong>');
+                        span.text(':' + elt.feature);
+                        strong.text(elt.surface);
+                        span.prepend(strong);
+                        pre.append(span);
+                        pre.append('<br />');
+                    });
+                }
+            });
+        });
     });
 
 

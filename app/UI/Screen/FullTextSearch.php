@@ -1,6 +1,6 @@
 <?php
 
-namespace MecabSweet\Screen;
+namespace MecabSweet\UI\Screen;
 
 
 use MeCabSweet\Pattern\AdminScreen;

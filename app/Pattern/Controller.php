@@ -227,6 +227,19 @@ abstract class Controller extends Application
 	}
 
 	/**
+	 * Throw not found error
+	 *
+	 * @param string $message
+	 * @throw \RuntimeException
+	 */
+	protected function not_found($message = ''){
+		if( !$message ){
+			$message = $this->i18n->__('Not found.');
+		}
+		throw new \RuntimeException($message, 404);
+	}
+
+	/**
 	 * Do wp_die
 	 *
 	 * @param string $message
@@ -256,10 +269,6 @@ abstract class Controller extends Application
 				}
 			}
 		}
-	}
-
-	public function validate_required($keys = array()){
-
 	}
 
 }

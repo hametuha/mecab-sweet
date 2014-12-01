@@ -1,5 +1,5 @@
 <?php
-	/** @var \MecabSweet\Screen\FullTextSearch $this */
+	/** @var \MecabSweet\UI\Screen\UserDictionary $this */
 ?>
 <h3><i class="dashicons dashicons-welcome-learn-more"></i> <?php $this->i18n->_e('Preliminary Knowledge') ?></h3>
 
@@ -34,6 +34,64 @@
 		<td class="description">
 			<p class="description">
 				<?php $this->i18n->_e('If enabled, MeCab will include user dictionary.') ?>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><?php $this->i18n->_e('Dictionary Command Path') ?></th>
+		<td class="status">
+			<?php if( !$this->option->dict_index_path ): ?>
+				<span class="off">Not set</span>
+			<?php elseif( !file_exists($this->option->dict_index_path) ): ?>
+				<span class="off">Not found</span>
+			<?php elseif( !is_executable($this->option->dict_index_path) ): ?>
+				<span class="off">Not Executable</span>
+			<?php else: ?>
+				<span class="on">OK</span>
+			<?php endif; ?>
+		</td>
+		<td class="description">
+			<p class="description">
+				<?php $this->i18n->_e('This command will be executed to make user dictionary.') ?><br />
+				<code><?php echo esc_html($this->option->dict_index_path) ?></code>
+			</p>
+			<?php if( $this->dic->sys_dic ): ?>
+			<p>
+				<?php foreach( array(
+					$this->i18n->__('System Dictionary') => $this->dic->sys_dic,
+					$this->i18n->__('User Dictionary') => $this->dic->user_dic
+				) as $label => $dic ): foreach($dic as $key => $val): ?>
+					<?php
+						switch($key){
+							case 'filename':
+								printf('%s: <code>%s</code>', esc_html($label), esc_html($val));
+								break;
+							case 'charset':
+								printf(' <small>%s</small><br />', $val);
+								break;
+							default:
+								// Do nothing
+								break;
+						}
+					?>
+				<?php endforeach; endforeach; ?>
+			</p>
+			<?php endif; ?>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row"><?php $this->i18n->_e('User Dictionary Status') ?></th>
+		<td class="status">
+			<?php if( ($last_modified = $this->dic->last_compiled('dic') ) ): ?>
+				<span class="on"><?php $this->i18n->_p('%s Ago', human_time_diff($last_modified)) ?></span>
+			<?php else: ?>
+				<span class="off"><?php $this->i18n->_e('Not Yet') ?></span>
+			<?php endif; ?>
+		</td>
+		<td class="description">
+			<p class="description">
+				<?php $this->i18n->_e('You must compile your user dictionary') ?>
+				<?php $this->load_template('binary') ?>
 			</p>
 		</td>
 	</tr>
@@ -96,9 +154,42 @@
 		</td>
 		<td class="description">
 			<p class="description">
+				<?php if( $this->option->taxonomy ): ?>
+				<strong><?php $this->i18n->_p('%s words registered', number_format_i18n($this->models->terms->word_count())) ?></strong><br />
+				<?php endif; ?>
 				<?php $this->i18n->_e('If enabled, you can access admin screen for user dictionary. Add, Delete or Edit your terms and they will be compiled to MeCab ready format.') ?>
 			</p>
 		</td>
+	</tr>
+	<tr>
+		<th scope="row"><?php $this->i18n->_e('CSV Compiled') ?></th>
+		<td class="status">
+			<?php if( ($last_modified = $this->dic->last_compiled()) ): ?>
+				<span class="on"><?php $this->i18n->_p('%s Ago', human_time_diff($last_modified)) ?></span>
+			<?php else: ?>
+				<span class="off"><?php $this->i18n->_e('Not Yet') ?></span>
+			<?php endif; ?>
+		</td>
+		<td class="description">
+			<p class="description">
+				<?php $this->i18n->_e('CSV file must be compiled by yourself.') ?>
+				<?php $this->load_template('compiler') ?>
+			</p>
+		</td>
+	</tr>
 	</tbody>
 </table>
 
+<hr />
+
+<h3><span class="dashicons dashicons-tag"></span> <?php $this->i18n->_e('Try Tagging') ?></h3>
+<p><?php $this->i18n->_e('You can check if user dictionary works fine. Enter some sentences and check their parsed reult.') ?></p>
+<form id="check-user-dic" action="<?php echo home_url('/mecab-terms/info', force_ssl_admin() ? 'https' : 'http') ?>" method="get">
+	<p>
+		<input type="text" class="long-text" name="s" value="" placeholder="<?php $this->i18n->_e('Enter word to check') ?>" />
+		<?php submit_button($this->i18n->__('Check'), 'primary', 'submit', false) ?>
+	</p>
+	<pre class="result-window">
+<?php $this->i18n->_e('Here comes tokens.') ?>
+	</pre>
+</form>

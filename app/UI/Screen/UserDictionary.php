@@ -1,6 +1,6 @@
 <?php
 
-namespace MeCabSweet\Screen;
+namespace MeCabSweet\UI\Screen;
 
 
 use MeCabSweet\Pattern\AdminScreen;
@@ -14,6 +14,4 @@ use MeCabSweet\Pattern\AdminScreen;
 class UserDictionary extends AdminScreen
 {
 
-
-
-} 
+}

@@ -1,14 +1,17 @@
 <?php
-/** @var \MecabSweet\Screen\TaxonomyAdd $this */
+/** @var \MecabSweet\UI\Screen\TaxonomyAdd $this */
+
 ?>
 <h2>
 	<span class="dashicons dashicons-plus-alt"></span>
 	<?php echo $this->is_editing() ? $this->i18n->__('Edit Word') : $this->i18n->__('Add Word') ?>
+	<small>
+		<?php $this->i18n->_p('or <a href="%s">Back to list</a>', $this->url('mecab-dic-registered')) ?>
+	</small>
 </h2>
 
-<form method="post" id="morphem-editor" action="<?php echo home_url('/mecab-terms/'.($this->is_editing() ? 'edit' : 'add'), force_ssl_admin() ? 'https' : 'http') ?>">
+<form method="post" id="morphem-editor" action="<?php echo home_url('/mecab-terms/'.($this->is_editing() ? 'edit/'.$this->get_morpheme_attr('term_id') : 'add'), force_ssl_admin() ? 'https' : 'http') ?>">
 	<?php wp_nonce_field('mecab_term_edit') ?>
-	<input type="hidden" name="term_id" value="<?php $this->morpheme_attr('term_id') ?>" />
 	<table class="form-table">
 		<tr>
 			<th><label for="morpheme"><?php $this->i18n->_e('Surface') ?></label></th>
@@ -41,7 +44,7 @@
 				<input type="number" name="cost" id="cost" value="<?php $this->morpheme_attr('cost') ?>" placeholder="<?php $this->i18n->_e('Enter cost') ?>" />
 				<p class="description">
 					<?php $this->i18n->_e('When MeCab splits strings to tokens, it calculate each word\'s superiority with cost.') ?>
-					<?php $this->i18n->_e('High cost means high priority. Good practice is assigning same cost as similar word with tool below.') ?>
+					<?php $this->i18n->_e('Low cost means high priority. Good practice is assigning same cost as similar word with tool below.') ?>
 				</p>
 				<input type="text" id="cost-calc" placeholder="<?php $this->i18n->_e('Search similar word\'s cost') ?>" />
 				<a id="cost-exec" class="button" href="<?php echo home_url('/mecab-terms/info/', force_ssl_admin() ? 'https' : 'http') ?>"><?php $this->i18n->_e('Search') ?></a>

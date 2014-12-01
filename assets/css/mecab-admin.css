@@ -1,18 +1,16 @@
-/* line 8, ../scss/mecab-admin.scss */
 .mecab-sweet-admin-wrap h2 .dashicons {
   width: 29px;
   height: 29px;
   font-size: 29px; }
-/* line 14, ../scss/mecab-admin.scss */
 .mecab-sweet-admin-wrap input[type=number] {
   width: 8em; }
+.mecab-sweet-admin-wrap input.long-text {
+  width: 90%; }
 
-/* line 20, ../scss/mecab-admin.scss */
 .mecab-jumbotron {
   position: relative;
   padding: 2em 2em 2em 200px;
   min-height: 150px; }
-  /* line 24, ../scss/mecab-admin.scss */
   .mecab-jumbotron .eyecatch {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -20,74 +18,54 @@
     position: absolute;
     left: 0;
     top: 15px; }
-  /* line 30, ../scss/mecab-admin.scss */
   .mecab-jumbotron .example {
     display: none; }
-    /* line 32, ../scss/mecab-admin.scss */
     .mecab-jumbotron .example.toggle {
       display: block; }
-    /* line 35, ../scss/mecab-admin.scss */
     .mecab-jumbotron .example pre {
       padding: 1em;
       background-color: #fff; }
-      /* line 38, ../scss/mecab-admin.scss */
       .mecab-jumbotron .example pre .comment {
         color: #ccc; }
-      /* line 41, ../scss/mecab-admin.scss */
       .mecab-jumbotron .example pre .keyword {
         color: #d16755; }
-      /* line 44, ../scss/mecab-admin.scss */
       .mecab-jumbotron .example pre .string {
         color: #3888a5; }
-      /* line 47, ../scss/mecab-admin.scss */
       .mecab-jumbotron .example pre .variable {
         color: #dd6b38; }
-      /* line 50, ../scss/mecab-admin.scss */
       .mecab-jumbotron .example pre .method {
         color: #9d9d00; }
 
-/* line 58, ../scss/mecab-admin.scss */
 .wrap .alert {
   color: #c23607; }
-/* line 61, ../scss/mecab-admin.scss */
 .wrap .warning {
   color: #dd742e; }
 
-/* line 66, ../scss/mecab-admin.scss */
 .mecab-status {
   table-layout: auto;
   border-collapse: collapse;
   width: 100%; }
-  /* line 70, ../scss/mecab-admin.scss */
   .mecab-status caption {
     font-size: 1.5em;
     padding: 1em 0; }
-  /* line 74, ../scss/mecab-admin.scss */
   .mecab-status th, .mecab-status td {
     padding: 1em 1.5em;
     background-color: #f9f9f9;
     border-left: 1px dotted #ddd; }
-  /* line 80, ../scss/mecab-admin.scss */
   .mecab-status thead th {
     border-top: 3px double #ddd;
     border-bottom: 3px double #ddd; }
-    /* line 83, ../scss/mecab-admin.scss */
     .mecab-status thead th:first-child {
       border-left: none; }
-  /* line 89, ../scss/mecab-admin.scss */
   .mecab-status tbody th {
     white-space: nowrap;
     border-left: none; }
-  /* line 93, ../scss/mecab-admin.scss */
   .mecab-status tbody th, .mecab-status tbody td {
     border-bottom: 1px solid #ddd; }
-  /* line 97, ../scss/mecab-admin.scss */
   .mecab-status tbody tr:nth-child(odd) th, .mecab-status tbody tr:nth-child(odd) td {
     background-color: #ffffff; }
-  /* line 102, ../scss/mecab-admin.scss */
   .mecab-status .status {
     text-align: center; }
-  /* line 105, ../scss/mecab-admin.scss */
   .mecab-status .on, .mecab-status .off {
     display: inline-block;
     padding: 5px 10px;
@@ -96,58 +74,52 @@
     border-radius: 5px;
     color: white;
     font-family: monospace; }
-  /* line 112, ../scss/mecab-admin.scss */
   .mecab-status .on {
     background-color: #008000; }
-  /* line 115, ../scss/mecab-admin.scss */
   .mecab-status .off {
     background-color: red; }
 
-/* line 120, ../scss/mecab-admin.scss */
 .result-window {
   background-color: #000;
   color: #fff;
   padding: 1em;
   font-family: monospace; }
-  /* line 125, ../scss/mecab-admin.scss */
   .result-window h4 {
     font-weight: normal; }
-  /* line 128, ../scss/mecab-admin.scss */
   .result-window .indicator {
     height: 1em;
     background-color: #444; }
-    /* line 131, ../scss/mecab-admin.scss */
     .result-window .indicator div {
       background-color: #406d4a;
       height: 100%;
       width: 0; }
 
-/* line 140, ../scss/mecab-admin.scss */
 .loading .result-window {
   display: block; }
 
-/* line 145, ../scss/mecab-admin.scss */
 #form-message {
   height: 12em;
   line-height: 1.2;
   overflow: auto; }
-  /* line 149, ../scss/mecab-admin.scss */
   #form-message span, #form-message strong {
     display: block; }
-  /* line 152, ../scss/mecab-admin.scss */
   #form-message strong {
     color: red; }
 
-/* line 157, ../scss/mecab-admin.scss */
 #form-message.loading {
   background: url("../img/ajax-loader.gif") center center no-repeat; }
 
-/* line 164, ../scss/mecab-admin.scss */
+.dictionary-compiler {
+  cursor: pointer; }
+  .dictionary-compiler + img {
+    display: none; }
+  .dictionary-compiler.disabled + img {
+    display: inline-block; }
+
 #token-result {
   margin-top: 0.5em;
   padding: 0.5em 1em;
   background-color: #f9f9f9; }
-  /* line 168, ../scss/mecab-admin.scss */
   #token-result a {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -156,19 +128,16 @@
     font-size: 0.85em;
     display: inline-block;
     margin-right: 1em; }
-    /* line 174, ../scss/mecab-admin.scss */
     #token-result a:link, #token-result a:visited {
       background: #2ea2cc;
       border-color: #0074a2;
       color: #fff;
       text-decoration: none; }
-    /* line 180, ../scss/mecab-admin.scss */
     #token-result a:hover, #token-result a:active {
       text-decoration: none;
       color: #fff;
       background-color: #2581a2; }
 
-/* line 193, ../scss/mecab-admin.scss */
 #mecab-admin-footer {
   position: relative;
   background-color: white;
@@ -176,31 +145,24 @@
   padding: 2em;
   overflow: hidden;
   *zoom: 1; }
-  /* line 201, ../scss/mecab-admin.scss */
   #mecab-admin-footer .fork-me {
     position: absolute;
     right: 0;
     top: 0; }
-  /* line 207, ../scss/mecab-admin.scss */
   #mecab-admin-footer .fb-like-box {
     float: right;
     margin-left: 2em; }
-  /* line 212, ../scss/mecab-admin.scss */
   #mecab-admin-footer ul {
     margin-right: 300px; }
-    /* line 214, ../scss/mecab-admin.scss */
     #mecab-admin-footer ul li {
       margin: 10px 0; }
-      /* line 216, ../scss/mecab-admin.scss */
       #mecab-admin-footer ul li a {
         display: block;
         padding: 10px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
         border-radius: 3px; }
-        /* line 220, ../scss/mecab-admin.scss */
         #mecab-admin-footer ul li a:link {
           text-decoration: none; }
-        /* line 223, ../scss/mecab-admin.scss */
         #mecab-admin-footer ul li a:hover {
           background-color: #f9f9f9; }
