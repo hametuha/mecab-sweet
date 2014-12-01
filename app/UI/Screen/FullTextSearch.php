@@ -21,7 +21,7 @@ class FullTextSearch extends AdminScreen
 	public function admin_init() {
 		if( !$this->is_ajax() ){
 			// Update table
-			if( $this->models->search_index->update_table() ){
+			if( $this->option->fulltext_search && $this->models->search_index->update_table() ){
 				$this->set_message($this->i18n->__('Full Text Search Table has been updated.'));
 			}
 		}else{
