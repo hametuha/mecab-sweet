@@ -16,9 +16,10 @@ class Taxonomy extends AdminScreen
 	public function admin_init() {
 		if( !$this->is_ajax() ){
 			// Update table
-			if( $this->models->terms->update_table() ){
-				$this->set_message($this->i18n->__('Dictionary table has been updated.'));
+			if( $this->models->terms->update_table() ) {
+				$this->set_message( $this->i18n->__( 'Dictionary table has been updated.' ) );
 			}
+
 			// Add Script
 			if( $this->is_page($this->settings['slug']) ){
 				wp_enqueue_script('mecab-word-list', $this->base_url.'assets/js/mecab-admin-word-list.min.js', array('jquery-form', 'jquery-effects-highlight'), $this->version);

@@ -14,6 +14,8 @@ use MeCabSweet\Pattern\Model;
 class SearchIndex extends Model
 {
 
+	public $table_version = '1.0';
+
 	/**
 	 * Get post types to make index
 	 *

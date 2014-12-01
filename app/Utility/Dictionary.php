@@ -25,7 +25,7 @@ class Dictionary extends Application
 	 * Register user dictionary
 	 */
 	public function register_user_dic(){
-		if( $this->dic_bin ){
+		if( $this->dic_bin && file_exists($this->dic_bin)){
 			// Specify default user dictionary
 			ini_set('mecab.default_userdic', $this->dic_bin);
 		}

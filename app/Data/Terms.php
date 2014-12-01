@@ -240,16 +240,16 @@ SQL;
 				ruby TEXT NOT NULL,
 				pronunciation TEXT NOT NULL,
 				cost BIGINT NOT NULL,
-				part_of_speech VARCHAR(48) NOT NULL DEFAULT "名詞",
-				option_1 VARCHAR(48) NOT NULL DEFAULT "一般",
-				option_2 VARCHAR(48) NOT NULL DEFAULT "*",
-				option_3 VARCHAR(48) NOT NULL DEFAULT "*",
-				conjugation VARCHAR(256) NOT NULL DEFAULT "*",
-				conjugation_type VARCHAR(256) NOT NULL DEFAULT "*",
+				part_of_speech VARCHAR(48) NOT NULL DEFAULT '',
+				option_1 VARCHAR(48) NOT NULL DEFAULT '',
+				option_2 VARCHAR(48) NOT NULL DEFAULT '',
+				option_3 VARCHAR(48) NOT NULL DEFAULT '',
+				conjugation VARCHAR(256) NOT NULL DEFAULT '',
+				conjugation_type VARCHAR(256) NOT NULL DEFAULT '',
 				left_context_id VARCHAR(256) NOT NULL,
 				right_context_id VARCHAR(256) NOT NULL,
 				updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				FULLTEXT term_index (morphem, ruby)
+				FULLTEXT term_index  (morpheme, ruby)
 			) ENGINE = {$engine} DEFAULT CHARSET = utf8  COLLATE utf8_unicode_ci
 SQL;
 		return $query;

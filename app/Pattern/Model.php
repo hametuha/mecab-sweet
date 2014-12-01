@@ -63,7 +63,7 @@ abstract class Model extends Application
 	 * @return bool
 	 */
 	public function is_outdated(){
-		return version_compare($this->version, $this->current_version, '>');
+		return version_compare($this->table_version, $this->current_version, '>');
 	}
 
 	/**
